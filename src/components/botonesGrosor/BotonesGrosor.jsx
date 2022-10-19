@@ -11,4 +11,6 @@ const BotonesGrosor = () => {
         </div>
     );
 }
+
+
 export default BotonesGrosor;
