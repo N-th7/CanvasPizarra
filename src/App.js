@@ -1,23 +1,16 @@
-import logo from './logo.svg';
+import Lienzo from './components/lienzo/Lienzo';
+import Menu from './components/menu/Menu';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div class="w3-row">
+          <Lienzo></Lienzo>
+          <div class="w3-col l4 w3-center">
+            <Menu></Menu>
+          </div>
+        </div>
     </div>
   );
 }
