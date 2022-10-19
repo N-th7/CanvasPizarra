@@ -7,6 +7,7 @@ const Menu = () =>{
         <div class="opciones w3-center">
             <BotonesGrosor></BotonesGrosor>
             <BotonesColor></BotonesColor>
+            <button class="limpiar" id="reset" onclick="limpiarCanvas()">Limpiar</button>
         </div>
     );
 }
