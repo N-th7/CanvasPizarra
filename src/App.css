@@ -31,6 +31,16 @@ body{
 
 }
 
+.subir{
+  background-color:#D9D9D9;
+  border-radius: 8px;
+  margin-bottom: 2%;
+  margin-top: 4%;
+  width: 30%;
+  font-size: larger;
+  border: 3px solid black;
+}
+
 .grosor img{
   width: 100%;
 }
@@ -82,4 +92,7 @@ body{
 }
 .botonColor11{
   background-color: #8601AF;
+}
+.botonColor12{
+  background-color: #ffffff;
 }
