@@ -1,11 +1,17 @@
 import React from "react";
 
-const BotonesColor = () => {
+
+const BotonesColor = ({color}) => {
+    function cambiarColor(col){
+        color=col;
+        console.log(color);
+
+    }
     return(
         <div>   
                     <h1>Colores</h1>
-                    <button className="botonColor color" onclick="cambiarColor('#000000')"></button>
-                    <button className="botonColor1 color" onclick="cambiarColor('#611111')"></button>
+                    <button className="botonColor color" onClick="cambiarColor('#000000')"></button>
+                    <button className="botonColor1 color" onClick={cambiarColor('#611111')}></button>
                     <button className="botonColor2 color" onclick="cambiarColor('#FE2712')"></button>
                     <button className="botonColor3 color" onclick="cambiarColor('#FB9902')"></button><br/>
                     <button className="botonColor4 color" onclick="cambiarColor('#FABC02')"></button>

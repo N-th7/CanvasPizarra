@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import CanvasDraw from "react-canvas-draw";
+import { createPortal } from 'react-dom';
 
 
 const Lienzo = () => {
@@ -12,9 +13,8 @@ const Lienzo = () => {
     return(
         <div className="w3-col l8 w3-center board">
             <main className="main-container">
-                <button onClick={limpiar}>Limpiar2</button>
                 {/* <canvas id="main-canvas" width="950" height="650"></canvas> */}
-                <CanvasDraw ref={micanvas} hideGrid={true} canvasWidth={1200} canvasHeight={850} />
+                <CanvasDraw ref={micanvas} hideGrid={false} canvasWidth={950} canvasHeight={650} brushColor={"#000"}/>
             </main>        
         </div>
     );
