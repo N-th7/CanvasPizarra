@@ -10,16 +10,24 @@ function App() {
   const [color, setColor] = useState("#000")
   const [img, setImg] = useState("")
   let initialX;
-  let initialY;
-
+    let initialY;
+   console.log(width);
+   let rect=false;
+   let inix;
+   let iniy;
+   let finx;
+   let finy;
+   
   useEffect(()=>{
     const mainCanvas = document.getElementById("main-canvas");
-      const context = mainCanvas.getContext("2d");
-    const dibujar = (cursorX, cursorY) => {
+    const context = mainCanvas.getContext("2d");
+    context.lineWidth = width;
+    context.strokeStyle = color;
+
+    const dibujar = (cursorX, cursorY, evt) => {
       context.beginPath();
       context.moveTo(initialX, initialY);
-      context.lineWidth = width;
-      context.strokeStyle = color;
+      
       context.lineCap = "round";
       context.lineJoin = "round";
       context.lineTo(cursorX, cursorY);
@@ -27,12 +35,21 @@ function App() {
     
       initialX = cursorX;
       initialY = cursorY;
+      if(rect){
+          
+        context.strokeRect(inix, iniy, finx-inix,finy-iniy);
+        rect=false
+  }
     };
     
-    const mouseDown = (evt) => {
+    const mouseDown = (evt) => { 
       initialX = evt.offsetX;
       initialY = evt.offsetY;
       dibujar(initialX, initialY);
+        console.log(initialX+ " primero " + initialY);
+        inix=initialX;
+        iniy=initialY;
+    
       mainCanvas.addEventListener("mousemove", mouseMoving);
     };
     
@@ -40,15 +57,23 @@ function App() {
       dibujar(evt.offsetX, evt.offsetY);
     };
     
-    const mouseUp = () => {
+    const mouseUp = (evt) => {
+      finx=evt.offsetX;
+      finy= evt.offsetY;
+      console.log(finx +"     " + finy);
       mainCanvas.removeEventListener("mousemove", mouseMoving);
     };
-    
+
+
     
     mainCanvas.addEventListener("mousedown", mouseDown);
     mainCanvas.addEventListener("mouseup", mouseUp);
     
   });
+  const changeFig = () => {
+    rect=true;
+    console.log("esVerdad")
+  }
 
   const micanvas = useRef(null)
 
@@ -64,10 +89,7 @@ function App() {
 
   }
 
-  const changeFig = () => {
-    console.log(micanvas.canvasContainer)
-      
-  }
+  
   return (
     <div className="App">
         <div className="w3-row">
