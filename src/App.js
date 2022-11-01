@@ -23,11 +23,15 @@ function App() {
     const context = mainCanvas.getContext("2d");
     context.lineWidth = width;
     context.strokeStyle = color;
-
-    const dibujar = (cursorX, cursorY, evt) => {
+      
+      
+      const dibujar = (cursorX, cursorY, evt) => {
       context.beginPath();
       context.moveTo(initialX, initialY);
-      
+      if(rect){
+        context.strokeStyle= "#FFFFFF80"; // El mismo que antes, blanco con 50% de transparencia.
+        console.log("hollllllllaa")
+      }
       context.lineCap = "round";
       context.lineJoin = "round";
       context.lineTo(cursorX, cursorY);
@@ -35,11 +39,6 @@ function App() {
     
       initialX = cursorX;
       initialY = cursorY;
-      if(rect){
-          
-        context.strokeRect(inix, iniy, finx-inix,finy-iniy);
-        rect=false
-  }
     };
     
     const mouseDown = (evt) => { 
@@ -61,6 +60,11 @@ function App() {
       finx=evt.offsetX;
       finy= evt.offsetY;
       console.log(finx +"     " + finy);
+      if(rect){
+        context.strokeStyle=color
+        context.strokeRect(inix, iniy, finx-inix,finy-iniy);
+          rect=false
+  }
       mainCanvas.removeEventListener("mousemove", mouseMoving);
     };
 
