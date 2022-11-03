@@ -18,6 +18,8 @@ function App() {
    let finx;
    let finy;
    
+  const [texto, setTexto] = useState("")
+
   useEffect(()=>{
     const mainCanvas = document.getElementById("main-canvas");
     const context = mainCanvas.getContext("2d");
@@ -74,6 +76,14 @@ function App() {
     mainCanvas.addEventListener("mouseup", mouseUp);
     
   });
+
+  const agregarTexto = () => {
+    var canvas = document.getElementById("main-canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.font = "bold 22px sans-serif";
+    ctx.fillText(texto,90,90);
+  }
+
   const changeFig = () => {
     rect=true;
     console.log("esVerdad")
@@ -83,8 +93,11 @@ function App() {
 
 
     const limpiar = () => {
-        micanvas.current.eraseAll()
-        console.log(color);
+        // micanvas.current.eraseAll()
+        // console.log(color);
+        const mainCanvas = document.getElementById("main-canvas");
+        const context = mainCanvas.getContext("2d");
+        context.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
     }
     const onImageChange = (e) => {
       const urlImg = URL.createObjectURL(e.target.files[0]);
@@ -109,9 +122,11 @@ function App() {
                 <Figuras></Figuras>
                 <button onClick={changeFig}>prueba</button>
                             <button className="limpiar" id="reset" onClick={limpiar}>Limpiar</button><br/>
-                            <input className="subir" type="file" multiple accept="image/*"  onChange={onImageChange} />
+                            <input className="subir" type="file" multiple accept="image/*"  onChange={onImageChange} /><br/>
+                            <h1>Texto</h1>
+                            <input type="text" value={texto} onChange={(e) => setTexto (e.target.value)}/>
+                            <button className="subir" onClick={agregarTexto}>Agregar texto</button>
                 </div>
-
           </div>
         </div>
     </div>
