@@ -2,11 +2,12 @@ import React from "react";
 import BotonesColor from "../botonColor/BotonesColor";
 import BotonesGrosor from "../botonesGrosor/BotonesGrosor";
 
-const Menu = ({color}) =>{
+const Menu = ({setColor, setGrosor}) =>{
     return(
         <div>
-            <BotonesGrosor></BotonesGrosor>
-            <BotonesColor color={color}></BotonesColor>
+            <h1>Menú</h1>
+            <BotonesGrosor setGrosor={setGrosor}></BotonesGrosor>
+            <BotonesColor setColor={setColor}></BotonesColor>
             
         </div>
     );
