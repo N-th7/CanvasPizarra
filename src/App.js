@@ -9,14 +9,18 @@ function App() {
   const [width, setGrosor] = useState(12)
   const [color, setColor] = useState("#000")
   const [img, setImg] = useState("")
+  let rect =false;
+  let line= false;
+  let circle= false;
+  let triangle=false;
   let initialX;
     let initialY;
    console.log(width);
-   let rect=false;
    let inix;
    let iniy;
    let finx;
    let finy;
+   let figura=false;
    
   useEffect(()=>{
     const mainCanvas = document.getElementById("main-canvas");
@@ -28,8 +32,8 @@ function App() {
       const dibujar = (cursorX, cursorY, evt) => {
       context.beginPath();
       context.moveTo(initialX, initialY);
-      if(rect){
-        context.strokeStyle= "#FFFFFF80"; // El mismo que antes, blanco con 50% de transparencia.
+      if(figura){
+        context.strokeStyle= '#ffffff00'; // El mismo que antes, blanco con 50% de transparencia.
         console.log("hollllllllaa")
       }
       context.lineCap = "round";
@@ -63,8 +67,28 @@ function App() {
       if(rect){
         context.strokeStyle=color
         context.strokeRect(inix, iniy, finx-inix,finy-iniy);
-          rect=false
-  }
+        rect=false
+          console.log(rect);
+          figura=false
+      }
+      if(line){
+        context.strokeStyle=color
+        context.moveTo(inix,iniy)
+        context.lineTo(finx,finy)
+        context.stroke()
+        line=false
+        figura=false
+      }
+      if(circle){
+        context.strokeStyle=color
+        context.beginPath()
+        context.arc(inix,iniy,Math.sqrt((finx-inix)*(finx-inix)+(finy-iniy)*(finy-iniy)), 0, 2*Math.PI)
+        context.stroke();
+        circle=false
+        figura=false
+
+      }
+
       mainCanvas.removeEventListener("mousemove", mouseMoving);
     };
 
@@ -74,9 +98,24 @@ function App() {
     mainCanvas.addEventListener("mouseup", mouseUp);
     
   });
-  const changeFig = () => {
-    rect=true;
-    console.log("esVerdad")
+  const changeFig = (fig) => {
+    figura=true
+    console.log(fig)
+    if(fig=='rect'){
+      rect=true;
+    }else{
+      if(fig=='line'){
+        line=true;
+        console.log(line)
+      }else{
+        if(fig == 'circle'){
+          circle=true;
+        }else{
+          triangle=true;
+        }
+      }
+    }
+
   }
 
   const micanvas = useRef(null)
@@ -106,8 +145,7 @@ function App() {
           <div className="w3-col l4 w3-center">
                 <div className="opciones w3-center">
                 <Menu setColor={setColor} setGrosor={setGrosor} ></Menu>
-                <Figuras></Figuras>
-                <button onClick={changeFig}>prueba</button>
+                <Figuras changeFig={changeFig}></Figuras>
                             <button className="limpiar" id="reset" onClick={limpiar}>Limpiar</button><br/>
                             <input className="subir" type="file" multiple accept="image/*"  onChange={onImageChange} />
                 </div>
