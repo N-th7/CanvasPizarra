@@ -16,7 +16,6 @@ const Figuras = ({changeFig}) => {
             <button className="figura" onClick={()=>crearFig('rect')}><img src={rec}/></button>
             <button className="figura" onClick={()=>crearFig('line')}><img src={lin}/></button>
             <button className="figura" onClick={()=>crearFig('circle')}><img src={cir}/></button>
-            <button className="figura" ><img src={tri}/></button>
         </div>
     )
 

@@ -11,10 +11,11 @@ const BotonesGrosor = ({grosor, setGrosor}) => {
     }
     return(
         <div className="grosor">
-                    <button className="boton" onClick={() => cambiarWidth(20)}><img src={grosor1}/></button>
-                    <button className="boton" onClick={() => cambiarWidth(10)}><img src={grosor2}/></button>
-                    <button className="boton" onClick={() => cambiarWidth(6)}><img src={grosor3}/></button>
-                    <button className="boton" onClick={() => cambiarWidth(3)}><img src={grosor4}/></button>
+            <h2>Grosor</h2>
+                    <button className="boton" onClick={() => cambiarWidth(20)}><img src={grosor1}/></button><br/>
+                    <button className="boton" onClick={() => cambiarWidth(10)}><img src={grosor2}/></button><br/>
+                    <button className="boton" onClick={() => cambiarWidth(6)}><img src={grosor3}/></button><br/>
+                    <button className="boton" onClick={() => cambiarWidth(3)}><img src={grosor4}/></button><br/>
         </div>
     );
 }

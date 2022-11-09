@@ -7,11 +7,10 @@ import Figuras from './components/figuras/Figuras.jsx';
 function App() {
   const [width, setGrosor] = useState(12)
   const [color, setColor] = useState("#000")
-  const [img, setImg] = useState("")
+ 
   let rect =false;
   let line= false;
   let circle= false;
-  let triangle=false;
   let initialX;
     let initialY;
    console.log(width);
@@ -21,19 +20,13 @@ function App() {
    let finy;
    let figura=false;
    const [texto, setTexto] = useState("")
-   var imagenCanvas = new Image();
    
   useEffect(()=>{
     const mainCanvas = document.getElementById("main-canvas");
     const context = mainCanvas.getContext("2d");
     context.lineWidth = width;
     context.strokeStyle = color;
-    imagenCanvas.src = document.getElementById
-    imagenCanvas.onload = function() {
 
-      context.drawImage(imagenCanvas, 30, 15);
-      
-      }
       
       
       const dibujar = (cursorX, cursorY, evt) => {
@@ -116,15 +109,12 @@ function App() {
         line=true;
         console.log(line)
       }else{
-        if(fig == 'circle'){
           circle=true;
-        }else{
-          triangle=true;
         }
       }
     }
 
-  }
+  
 
   const agregarTexto = () => {
     var canvas = document.getElementById("main-canvas");
@@ -142,10 +132,15 @@ const onImageChange = (e) => {
   var canvas = document.getElementById("main-canvas");
   var ctx = canvas.getContext("2d");
   var img = new Image();
-  img.src = "src/components/imagenes/favicon.png";
-  ctx.drawImage(img, 0, 0);
+  img.src="https://www.purina.es/sites/default/files/2021-02/BREED%20Hero_0034_chihuahua_smooth.jpg";
+
+  ctx.drawImage(img, finx, finy);
   console.log(img)
+
+
+
 }
+
 
   const micanvas = useRef(null)
 
@@ -165,21 +160,16 @@ const onImageChange = (e) => {
         </div>
           <div className="w3-col l4 w3-center">
                 <div className="opciones w3-center">
-                <Menu setColor={setColor} setGrosor={setGrosor} ></Menu>
-                <Figuras changeFig={changeFig}></Figuras>
+                <Menu setColor={setColor} setGrosor={setGrosor} changeFig={changeFig} texto={texto} setTexto={setTexto} agregarTexto={agregarTexto}></Menu>
                             <button className="limpiar" id="reset" onClick={limpiar}>Limpiar</button><br/>
-                            <input className="subir" id="imagen" type="file" multiple accept="image/*"  onChange={onImageChange} /><br/>
-                            <h1>Texto</h1>
-                            <input type="text" value={texto} onChange={(e) => setTexto (e.target.value)}/>
-                            <button className="subir" onClick={agregarTexto}>Agregar texto</button>
+                            <input className="subir" id="imagen" type="file" accept="image/*" multiple  onChange={onImageChange} /><br/>
+                            
                 </div>
 
           </div>
         </div>
     </div>
-  );<div>
-  <canvas></canvas>
-  </div>
+  );
 }
 
 
