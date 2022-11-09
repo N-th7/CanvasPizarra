@@ -21,12 +21,19 @@ function App() {
    let finy;
    let figura=false;
    const [texto, setTexto] = useState("")
+   var imagenCanvas = new Image();
    
   useEffect(()=>{
     const mainCanvas = document.getElementById("main-canvas");
     const context = mainCanvas.getContext("2d");
     context.lineWidth = width;
     context.strokeStyle = color;
+    imagenCanvas.src = document.getElementById
+    imagenCanvas.onload = function() {
+
+      context.drawImage(imagenCanvas, 30, 15);
+      
+      }
       
       
       const dibujar = (cursorX, cursorY, evt) => {
@@ -131,17 +138,20 @@ function App() {
     const context = mainCanvas.getContext("2d");
     context.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
 }
+const onImageChange = (e) => {
+  var canvas = document.getElementById("main-canvas");
+  var ctx = canvas.getContext("2d");
+  var img = new Image();
+  img.src = "src/components/imagenes/favicon.png";
+  ctx.drawImage(img, 0, 0);
+  console.log(img)
+}
 
   const micanvas = useRef(null)
 
 
 
-    const onImageChange = (e) => {
-      const urlImg = URL.createObjectURL(e.target.files[0]);
-      setImg(urlImg);
-      console.log(urlImg);
-
-  }
+    
 
   
   return (
@@ -158,7 +168,7 @@ function App() {
                 <Menu setColor={setColor} setGrosor={setGrosor} ></Menu>
                 <Figuras changeFig={changeFig}></Figuras>
                             <button className="limpiar" id="reset" onClick={limpiar}>Limpiar</button><br/>
-                            <input className="subir" type="file" multiple accept="image/*"  onChange={onImageChange} /><br/>
+                            <input className="subir" id="imagen" type="file" multiple accept="image/*"  onChange={onImageChange} /><br/>
                             <h1>Texto</h1>
                             <input type="text" value={texto} onChange={(e) => setTexto (e.target.value)}/>
                             <button className="subir" onClick={agregarTexto}>Agregar texto</button>
