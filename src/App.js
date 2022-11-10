@@ -27,6 +27,19 @@ function App() {
     context.lineWidth = width;
     context.strokeStyle = color;
 
+    const $canvas = document.querySelector("#main-canvas"),
+$btnDescargar = document.querySelector("#btnDescargar");
+
+$btnDescargar.addEventListener("click", () => {
+  // Crear un elemento <a>
+  let enlace = document.createElement('a');
+  // El título
+  enlace.download = "Canvas como imagen.png";
+  // Convertir la imagen a Base64 y ponerlo en el enlace
+  enlace.href = $canvas.toDataURL();
+  // Hacer click en él
+  enlace.click();
+});
       
       
       const dibujar = (cursorX, cursorY, evt) => {
@@ -142,6 +155,7 @@ const onImageChange = (e) => {
 }
 
 
+
   const micanvas = useRef(null)
 
 
@@ -163,7 +177,7 @@ const onImageChange = (e) => {
                 <Menu setColor={setColor} setGrosor={setGrosor} changeFig={changeFig} texto={texto} setTexto={setTexto} agregarTexto={agregarTexto}></Menu>
                             <button className="limpiar" id="reset" onClick={limpiar}>Limpiar</button><br/>
                             <input className="subir" id="imagen" type="file" accept="image/*" multiple  onChange={onImageChange} /><br/>
-                            
+                            <button id="btnDescargar">Descargar</button>
                 </div>
 
           </div>
