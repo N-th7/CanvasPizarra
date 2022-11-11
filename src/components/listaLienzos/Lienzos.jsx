@@ -5,14 +5,18 @@ const Lienzos= ({actualizar, enlistar,borrarDibujo}) =>{
         <div>
             
         <h1>Lienzos</h1>
-          {enlistar().map((item, index) => (
+            <ul>
+            {enlistar().map((item, index) => (
+
             <li key={index}>
               <button className="lienzoX" type="button" onClick={() => actualizar(item)} style={{marginRight:"10px"}}>{item}</button>
               <button type="button" onClick={() => borrarDibujo(item)}>
                 <Basurero />
               </button>
             </li>
-          ))}
+            ))}
+            </ul>
+          
         </div>
     );
 };
