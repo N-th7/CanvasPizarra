@@ -3,7 +3,7 @@
   box-shadow: 4px 4px 4px black;
 }
 .board{
-  padding: 2%;
+  padding-top: 2%;
   padding-right: 0;
 }
 
@@ -32,7 +32,9 @@ body{
   border-radius: 8px;
 
 }
-
+#btnDescargar{
+  margin-top: 50px;
+}
 .subir{
   margin-top: 4%;
   margin-bottom: 4%;
@@ -51,12 +53,23 @@ h1, h2{
   margin: 0 !important;
 }
 .opciones{
-  width: 80%;
+  width: 90%;
   border-radius: 5%;
   margin: auto;
   background-color: #A7A59A;
   margin-top: 5% ;
   padding: 2%;
+  
+}
+.lienzoX{
+  width: 70%;
+}
+.lienzos{
+  height: 690px;
+}
+li{
+  margin-bottom: 3%;
+  list-style: none;
 }
 .color{
   width: 45px;
