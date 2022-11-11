@@ -2,7 +2,6 @@ import Lienzo from './components/lienzo/Lienzo';
 import Menu from './components/menu/Menu';
 import './App.css';
 import React, { useEffect, useRef, useState } from 'react';
-import Figuras from './components/figuras/Figuras.jsx';
 
 function App() {
   const [width, setGrosor] = useState(12)
@@ -195,8 +194,7 @@ const onImageChange = (e) => {
         <div className="w3-col l8 w3-center board">
             <main className="main-container">
                 <canvas id="main-canvas" width="950" height="650"></canvas>
-{/*                <CanvasDraw ref={micanvas} hideGrid={true} canvasWidth={950} canvasHeight={650} brushColor={color} brushRadius={grosor} imgSrc={img} />
-*/}            </main>        
+            </main>        
         </div>
           <div className="w3-col l4 w3-center">
                 <div className="opciones w3-center">
