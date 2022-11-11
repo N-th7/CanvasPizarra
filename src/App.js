@@ -14,6 +14,7 @@ function App() {
   let circle = false;
   let ima=false;
   let txt=false;
+  let borrar=false;
  
   let initialX;
   let initialY;
@@ -23,27 +24,15 @@ function App() {
   let finy;
   let figura = false;
   const [texto, setTexto] = useState("");
-  var dibu;
+  let context
+  let mainCanvas
 
   useEffect(() => {
-    const mainCanvas = document.getElementById("main-canvas");
-    const context = mainCanvas.getContext("2d");
+    mainCanvas = document.getElementById("main-canvas");
+   context = mainCanvas.getContext("2d");
     context.lineWidth = width;
     context.strokeStyle = color;
 
-    const $canvas = document.querySelector("#main-canvas"),
-      $btnDescargar = document.querySelector("#btnDescargar");
-
-    $btnDescargar.addEventListener("click", () => {
-      // Crear un elemento <a>
-      let enlace = document.createElement("a");
-      // El título
-      enlace.download = "Canvas como imagen.png";
-      // Convertir la imagen a Base64 y ponerlo en el enlace
-      enlace.href = $canvas.toDataURL();
-      // Hacer click en él
-      enlace.click();
-    });
     const dibujar = (cursorX, cursorY, evt) => {
       if (figura) {
         context.strokeStyle = "#ffffff00"; // El mismo que antes, blanco con 50% de transparencia.
@@ -51,7 +40,7 @@ function App() {
       }
       context.beginPath();
       context.moveTo(initialX, initialY);
-
+      
       context.lineCap = "round";
       context.lineJoin = "round";
       context.lineTo(cursorX, cursorY);
@@ -60,12 +49,23 @@ function App() {
       initialX = cursorX;
       initialY = cursorY;
     };
-    dibu=dibujar;
+    const borrarTrazo = (cursorX,cursorY,evt)=>{
+      context.clearRect(initialX,initialY,width,width)
+      initialX = cursorX;
+      initialY = cursorY;
+    };
 
     const mouseDown = (evt) => {
       initialX = evt.offsetX;
       initialY = evt.offsetY;
+      if(borrar){
+        borrarTrazo(initialX,initialY);
+      }else{
+        if(borrar==false){
+          console.log("no mames")
       dibujar(initialX, initialY);
+      }
+      }
       console.log(initialX + " primero " + initialY);
       inix = initialX;
       iniy = initialY;
@@ -74,7 +74,14 @@ function App() {
     };
 
     const mouseMoving = (evt) => {
+      if(borrar){
+        borrarTrazo(evt.offsetX,evt.offsetY);
+      }else{
+        if(borrar==false){
       dibujar(evt.offsetX, evt.offsetY);
+    }
+      }
+      
     };
 
     const mouseUp = (evt) => {
@@ -126,10 +133,14 @@ function App() {
       }
       if(txt){
         context.font = "bold 22px sans-serif";
-        context.fillText(texto, finx, finx);
+        context.fillText(texto, finx, finy);
         txt = false;
         figura = false;
         context.strokeStyle = color;
+      }
+      if(borrar){
+        borrar=false
+        figura=false
       }
 
       mainCanvas.removeEventListener("mousemove", mouseMoving);
@@ -171,6 +182,13 @@ function App() {
     ima=true;
   
   };
+  const descargar =() =>{
+      let enlace = document.createElement("a");
+      enlace.download = "Canvas como imagen.png";
+      enlace.href = mainCanvas.toDataURL();
+      enlace.click();
+    
+  }
 
   const micanvas = useRef(null);
 
@@ -213,7 +231,8 @@ function App() {
   }
 
   const borrador = () => {
-    setColor("#FFF")
+    figura=true;
+    borrar=true;
   }
   return (
     <div className="App">
@@ -243,15 +262,17 @@ function App() {
               setTexto={setTexto}
               agregarTexto={agregarTexto}
             ></Menu>
-            <button className="limpiar" id="reset" onClick={borrador}>
+            
+           
+            <button className="borrador limpiar" id="reset" onClick={borrador}>
               Borrador
             </button>
+
             <button className="limpiar" id="reset" onClick={limpiar}>
               Limpiar
             </button>
-            <br />
             <input
-              className="subir"
+              className="subirImg"
               id="imagen"
               type="file"
               accept="image/*"
@@ -260,15 +281,17 @@ function App() {
             />
             <br />
             <input
-              type="text"
+              type="text" placeholder="Nombre de lienzo"
               value={drawID}
               onChange={(e) => setDrawID(e.target.value)}
             />
-            <button type="button" onClick={guardarDibujo}>
-              Guardar Dibujo
-            </button>
-            <button id="btnDescargar">Descargar</button>
-
+            <br/>
+            <button type="button" className="limpiar" onClick={guardarDibujo}>
+              Guardar lienzo
+            </button><br/>
+            
+            <button id="btnDescargar" className="descargar" onClick={descargar}>Descargar</button>
+            
           </div>
         </div>
       </div>
