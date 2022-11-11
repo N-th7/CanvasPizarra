@@ -20,6 +20,7 @@ function App() {
    let finy;
    let figura=false;
    const [texto, setTexto] = useState("")
+   const [img, setImg] = useState("")
    
   useEffect(()=>{
     const mainCanvas = document.getElementById("main-canvas");
@@ -142,13 +143,12 @@ $btnDescargar.addEventListener("click", () => {
 const onImageChange = (e) => {
   var canvas = document.getElementById("main-canvas");
   var ctx = canvas.getContext("2d");
-  var img = new Image();
-  img.src="https://www.purina.es/sites/default/files/2021-02/BREED%20Hero_0034_chihuahua_smooth.jpg";
-
-  ctx.drawImage(img, finx, finy);
-  console.log(img)
-
-
+  const selectedFile = document.getElementById('imagen').files[0];
+  var imagen= new Image();
+  imagen.src=selectedFile;
+  var miurl=createObjectURL(imagen)
+  ctx.drawImage(miurl,10,10)
+  console.log(imagen)
 
 }
 
@@ -197,7 +197,7 @@ const onImageChange = (e) => {
                 <div className="opciones w3-center">
                 <Menu setColor={setColor} setGrosor={setGrosor} changeFig={changeFig} texto={texto} setTexto={setTexto} agregarTexto={agregarTexto}></Menu>
                             <button className="limpiar" id="reset" onClick={limpiar}>Limpiar</button><br/>
-                            <input className="subir" id="imagen" type="file" accept="image/*" multiple  onChange={onImageChange} /><br/>
+                            <input className="subir" id="imagen" type="file" multiple accept="image/*"  onChange={onImageChange} /><br/>
                             <input type="text" value={drawID} onChange={(e) => setDrawID(e.target.value)}/>
                             <button type='button' onClick={guardarDibujo}>Guardar Dibujo</button><br/>
                             <button id="btnDescargar">Descargar</button>
