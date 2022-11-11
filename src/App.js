@@ -153,12 +153,14 @@ const onImageChange = (e) => {
 
 }
 
-
-
   const micanvas = useRef(null)
 
 
   const guardarDibujo = () => {
+    if(!drawID){
+      alert("La imagen no tiene nombre!!")
+      return;
+    }
     const canvas = document.querySelector("#main-canvas")
     const imagen = canvas.toDataURL()
     localStorage.setItem(drawID, imagen)
@@ -180,7 +182,8 @@ const onImageChange = (e) => {
     image.onload = function() {
     ctx.drawImage(image, 0, 0);
     };
-    image.src = imgID
+    image.src = localStorage.getItem(imgID);
+    setDrawID(imgID);
   }
 
   return (
