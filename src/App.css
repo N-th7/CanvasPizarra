@@ -32,7 +32,9 @@ body{
   border-radius: 8px;
 
 }
-
+#btnDescargar{
+  margin-top: 50px;
+}
 .subir{
   margin-top: 4%;
   margin-bottom: 4%;
@@ -57,6 +59,7 @@ h1, h2{
   background-color: #A7A59A;
   margin-top: 5% ;
   padding: 2%;
+  
 }
 .color{
   width: 45px;
