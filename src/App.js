@@ -1,4 +1,3 @@
-import Lienzo from "./components/lienzo/Lienzo";
 import Menu from "./components/menu/Menu";
 import "./App.css";
 import React, { useEffect, useRef, useState } from "react";
@@ -244,6 +243,8 @@ function App() {
           enlistar={enlistar}
           borrarDibujo={borrarDibujo}
           ></Lienzos>
+                      <button id="btnDescargar" className="descargar" onClick={descargar}>Descargar</button>
+
           </div>
         </div>
         <div className="w3-col l7 w3-center board">
@@ -264,13 +265,7 @@ function App() {
             ></Menu>
             
            
-            <button className="borrador limpiar" id="reset" onClick={borrador}>
-              Borrador
-            </button>
-
-            <button className="limpiar" id="reset" onClick={limpiar}>
-              Limpiar
-            </button>
+            
             <input
               className="subirImg"
               id="imagen"
@@ -289,8 +284,13 @@ function App() {
             <button type="button" className="limpiar" onClick={guardarDibujo}>
               Guardar lienzo
             </button><br/>
-            
-            <button id="btnDescargar" className="descargar" onClick={descargar}>Descargar</button>
+            <button className="borrador limpiar" id="reset" onClick={borrador}>
+              Borrador
+            </button><br/>
+
+            <button className="limpiar" id="reset" onClick={limpiar}>
+              Limpiar
+            </button>
             
           </div>
         </div>
