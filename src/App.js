@@ -2,11 +2,27 @@ import Menu from "./components/menu/Menu";
 import "./App.css";
 import React, { useEffect, useRef, useState } from "react";
 import Lienzos from "./components/listaLienzos/Lienzos";
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "./firebase/database";
+import { Pizarras } from "./components/listaLienzos/Pizarras";
 
 function App() {
   const [width, setGrosor] = useState(12);
   const [color, setColor] = useState("#000");
   const [drawID, setDrawID] = useState("");
+  const [pizarras, setPizarras] = useState({});
+  const [cargando, setCargando] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      const querySnapshot = await getDocs(collection(db, "pizarras"));
+      querySnapshot.forEach((doc) => {
+        setPizarras((prev) => ({...prev, [doc.id]: doc.data().imagen}))
+      })
+      setCargando(false)
+    } 
+    getData()
+  }, [])
 
   let rect = false;
   let line = false;
@@ -27,8 +43,11 @@ function App() {
   let mainCanvas
 
   useEffect(() => {
+    if(cargando){
+      return
+    }
     mainCanvas = document.getElementById("main-canvas");
-   context = mainCanvas.getContext("2d");
+    context = mainCanvas.getContext("2d");
     context.lineWidth = width;
     context.strokeStyle = color;
 
@@ -145,7 +164,7 @@ function App() {
 
     mainCanvas.addEventListener("mousedown", mouseDown);
     mainCanvas.addEventListener("mouseup", mouseUp);
-  });
+  },[cargando]);
 
   const changeFig = (fig) => {
     figura = true;
@@ -200,6 +219,24 @@ function App() {
     alert("Imagen guardada");
     window.location.reload()
   };
+  const guardarPizarra = async () => {
+    if (!drawID) {
+      alert("La imagen no tiene nombre!!");
+      return;
+    }
+    const canvas = document.querySelector("#main-canvas");
+    const imagen = canvas.toDataURL();
+    const docRef = doc(db,"pizarras", drawID)
+    const docSnap = await getDoc(docRef)
+    if(docSnap.exists()){
+      await updateDoc(docRef, {imagen})
+    }else{
+      await setDoc(docRef, {imagen}) 
+    }
+    alert("Pizarra guardada");
+    window.location.reload()
+  };
+
   const enlistar = () => {
     let lista = [];
     for (let x = 0; x <= localStorage.length - 1; x++) {
@@ -207,6 +244,10 @@ function App() {
       lista.push(clave);
     }
     return lista;
+  };
+
+  const enlistarPizarra = () => {
+    return Object.keys(pizarras);
   };
 
   const actualizar = (imgID) => {
@@ -221,28 +262,55 @@ function App() {
     setDrawID(imgID);
   };
 
+  const actualizarPizarra = (imgID) => {
+    let canvas = document.getElementById("main-canvas");
+    let ctx = canvas.getContext("2d");
+    limpiar();
+    let image = new Image();
+    image.onload = function () {
+      ctx.drawImage(image, 0, 0);
+    };
+    image.src = pizarras[imgID]
+    setDrawID(imgID);
+  };
+
   const borrarDibujo = (imgID) => {
     localStorage.removeItem(imgID)
     alert("Dibujo eliminado")
     window.location.reload()
   }
 
+  const borrarDibujoPizarra = async (imgID) => {
+    await deleteDoc(doc(db, "pizarras", imgID))
+    alert("Pizarra eliminada")
+    window.location.reload()
+  }
   const borrador = () => {
     figura=true;
     borrar=true;
   }
+
+  if(cargando){
+    return <div>Cargando...</div>
+  }
+
   return (
     <div className="App">
       <div className="w3-row">
         <div className="w3-col l2">
           <div className="opciones w3-center lienzos">
+          <button id="btnDescargar" className="descargar" onClick={descargar}>Descargar</button>
           <Lienzos 
           actualizar={actualizar}
           enlistar={enlistar}
           borrarDibujo={borrarDibujo}
-          ></Lienzos>
-                      <button id="btnDescargar" className="descargar" onClick={descargar}>Descargar</button>
+          ></Lienzos>           
 
+          <Pizarras 
+          actualizar={actualizarPizarra}
+          enlistar={enlistarPizarra}
+          borrarDibujo={borrarDibujoPizarra}
+          />
           </div>
         </div>
         <div className="w3-col l7 w3-center board">
@@ -281,6 +349,9 @@ function App() {
             <br/>
             <button type="button" className="limpiar" onClick={guardarDibujo}>
               Guardar lienzo
+            </button><br/>
+            <button type="button" className="limpiar" onClick={() => guardarPizarra()}>
+              Guardar pizarra
             </button><br/>
             <button className="borrador limpiar" id="reset" onClick={borrador}>
               Borrador
