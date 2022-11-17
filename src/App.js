@@ -33,25 +33,28 @@ function App() {
     context.strokeStyle = color;
 
     const dibujar = (cursorX, cursorY, evt) => {
-      if (figura) {
-        context.strokeStyle = "#ffffff00"; // El mismo que antes, blanco con 50% de transparencia.
-        console.log("hollllllllaa");
+      if(!borrar){
+        console.log(borrar)
+        if (figura) {
+          context.strokeStyle = "#ffffff00"; // El mismo que antes, blanco con 50% de transparencia.
+        }
+        context.beginPath();
+        context.moveTo(initialX, initialY);
+        
+        context.lineCap = "round";
+        context.lineJoin = "round";
+        context.lineTo(cursorX, cursorY);
+        context.stroke();
+  
+        initialX = cursorX;
+        initialY = cursorY;
       }
-      context.beginPath();
-      context.moveTo(initialX, initialY);
-      
-      context.lineCap = "round";
-      context.lineJoin = "round";
-      context.lineTo(cursorX, cursorY);
-      context.stroke();
-
-      initialX = cursorX;
-      initialY = cursorY;
     };
     const borrarTrazo = (cursorX,cursorY,evt)=>{
       context.clearRect(initialX,initialY,width,width)
       initialX = cursorX;
       initialY = cursorY;
+      borrar=true
     };
 
     const mouseDown = (evt) => {
@@ -61,11 +64,9 @@ function App() {
         borrarTrazo(initialX,initialY);
       }else{
         if(borrar==false){
-          console.log("no mames")
       dibujar(initialX, initialY);
       }
       }
-      console.log(initialX + " primero " + initialY);
       inix = initialX;
       iniy = initialY;
 
@@ -76,9 +77,7 @@ function App() {
       if(borrar){
         borrarTrazo(evt.offsetX,evt.offsetY);
       }else{
-        if(borrar==false){
       dibujar(evt.offsetX, evt.offsetY);
-    }
       }
       
     };
@@ -86,7 +85,6 @@ function App() {
     const mouseUp = (evt) => {
       finx = evt.offsetX;
       finy = evt.offsetY;
-      console.log(finx + "     " + finy);
       if (rect) {
         context.strokeStyle = color;
         context.strokeRect(inix, iniy, finx - inix, finy - iniy);
