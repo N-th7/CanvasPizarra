@@ -38,7 +38,8 @@
 button{
   background-color: #D9D9D9;
   border-radius: 8px;
-  margin: 1%;
+  margin-top: 0%;
+
 }
 button:hover {
   background-color: #525251; /* Green */
@@ -172,3 +173,10 @@ li{
   width: 85%;
 }
 
+.descargar{
+  margin-left: 2%;
+}
+
+.levantar{
+  background-color: rgb(144, 216, 144);
+}
